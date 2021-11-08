@@ -1,0 +1,15 @@
+#!/bin/bash
+
+
+sleep 2
+/root/vpnserver/vpnserver start
+sleep 3
+#GZQcloud互联
+ifconfig tap_gzqcloud 172.16.255.2 netmask 255.255.255.252
+
+ip_addr=ip add show | grep em1 | grep int | awk -F "brd" {'print $1 '} |  awk -F " " {'print $2'}
+ip=`echo $ip_addr | awk -F "/" {'print $1'}`
+netm=`echo $ip_addr | awk -F "/" {'print $2'}`
+gw=`netstat -rn | grep UG |  awk -F " " {'print $2'}`
+
+
