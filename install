@@ -6,5 +6,14 @@ ip_addr=ip add show | grep em1 | grep int | awk -F "brd" {'print $1 '} |  awk -F
 ip=`echo $ip_addr | awk -F "/" {'print $1'}`
 netm=`echo $ip_addr | awk -F "/" {'print $2'}`
 gw=`netstat -rn | grep UG |  awk -F " " {'print $2'}`
-
+enp=/etc/sysconfig/network-scripts/ifcfg-em1
+sed -i ‘s/dhcp/static/g’ $enp
+sed -i ‘/ONBOOT/c ONBOOT=yes’ $enp
+cat >> $enp <<EOF
+IPADDR=$ip
+PREFIX=$netm
+EOF
+systemctl restart network
+route add -host 81.71.50.191/32 gw $gw
+route add -net 183.62.127.96/27 gw $gw
 
