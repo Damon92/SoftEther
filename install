@@ -2,6 +2,11 @@
 wget https://github.com/Damon92/SoftEther/blob/main/softether-vpnserver-v4.37-9758-beta-2021.08.16-linux-x64-64bit.tar.gz
 tar -zxvf softether-vpnserver-v4.37-9758-beta-2021.08.16-linux-x64-64bit.tar.gz && cd vpnserver && make && cd /root/ && /root/vpnserver/vpnserver start
 
+echo "/bin/bash /root/start.sh" >> /etc/rc.d/rc.local
+chmod +x /etc/rc.d/rc.local
+echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
+echo "1" > /proc/sys/net/ipv4/ip_forward
+
 ip_addr=ip add show | grep em1 | grep int | awk -F "brd" {'print $1 '} |  awk -F " " {'print $2'}
 ip=`echo $ip_addr | awk -F "/" {'print $1'}`
 netm=`echo $ip_addr | awk -F "/" {'print $2'}`
