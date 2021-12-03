@@ -6,6 +6,9 @@ echo "/bin/bash /root/start.sh" >> /etc/rc.d/rc.local
 chmod +x /etc/rc.d/rc.local
 echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
 echo "1" > /proc/sys/net/ipv4/ip_forward
+echo "* * * * * sleep 30; /bin/bash /root/check_inter.sh" >> /var/spool/cron/root
+echo "* * * * * sleep 60; /bin/bash /root/check_inter.sh" >> /var/spool/cron/root
+
 
 ip_addr=ip add show | grep em1 | grep int | awk -F "brd" {'print $1 '} |  awk -F " " {'print $2'}
 ip=`echo $ip_addr | awk -F "/" {'print $1'}`
