@@ -1,5 +1,6 @@
 #!/bin/bash
-yum -y install gcc zlib-devel openssl-devel readline-devel ncurses-devel wget
+yum -y install epel-release
+yum -y install gcc zlib-devel openssl-devel readline-devel ncurses-devel wget iftop mtr lrzsz
 wget https://github.com/Damon92/SoftEther/blob/main/softether-vpnserver-v4.37-9758-beta-2021.08.16-linux-x64-64bit.tar.gz
 tar -zxvf softether-vpnserver-v4.37-9758-beta-2021.08.16-linux-x64-64bit.tar.gz && cd vpnserver && make && cd /root/ && /root/vpnserver/vpnserver start
 
